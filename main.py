@@ -1,11 +1,14 @@
 import sys
+
 import pygame as pygame
 from game import Game
 
+from constants import SCREEN_HEIGHT, SCREEN_WIDTH
+
 if __name__ == '__main__':
     pygame.init()
-    screen_width = 600
-    screen_height = 600
+    screen_width = SCREEN_WIDTH
+    screen_height = SCREEN_HEIGHT
     screen = pygame.display.set_mode((screen_width, screen_height))
     clock = pygame.time.Clock()
 
