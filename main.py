@@ -3,13 +3,14 @@ import sys
 import pygame as pygame
 from game import Game
 
-from constants import SCREEN_HEIGHT, SCREEN_WIDTH
+from constants import SCREEN_SIZE
 
 if __name__ == '__main__':
     pygame.init()
-    screen_width = SCREEN_WIDTH
-    screen_height = SCREEN_HEIGHT
+    screen_width = SCREEN_SIZE
+    screen_height = SCREEN_SIZE
     screen = pygame.display.set_mode((screen_width, screen_height))
+    pygame.display.set_caption('Minesweeper')
     clock = pygame.time.Clock()
 
     game = Game(screen)
