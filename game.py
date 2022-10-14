@@ -8,19 +8,14 @@ from cell import MinedCell
 class Game:
   def __init__(self, screen) -> None:
     self.screen = screen
-
-  def run(self):
-    cells = []
-    mines_coords = []
+    self.cells = []
+    self.mines_coords = []
     for i in range (NUMBER_OF_MINES):
-      # Same as `do (new mine coords) while (same coords)`
+      # Same as `do (new mine coords) while `
       while True:
-        mine_coords = (random.randint(0, NUMBER_OF_SIDE_CELLS), random.randint(0, NUMBER_OF_SIDE_CELLS))
+        mine_coords = (random.randint(0, NUMBER_OF_SIDE_CELLS - 1), random.randint(0, NUMBER_OF_SIDE_CELLS - 1))
         if not self.mines_coords.__contains__(mine_coords): break
-      self.mines_coords.append(mine_coords) 
-
-    print(self.mines_coords)
-
+      self.mines_coords.append(mine_coords)
 
     for i in range(NUMBER_OF_SIDE_CELLS):
       for j in range(NUMBER_OF_SIDE_CELLS):
