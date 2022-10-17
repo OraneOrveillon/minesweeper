@@ -1,8 +1,7 @@
 import pygame
 import random
 from constants import NUMBER_OF_SIDE_CELLS, NUMBER_OF_MINES
-from cell import Cell, MinedCell, NumberedCell
-
+from cell import Cell, MinedCell
 
 class Game:
     def __init__(self, screen):
@@ -32,10 +31,7 @@ class Game:
                   for cell_coord in range_cells:
                     if self.mines_coords.__contains__(cell_coord):
                       number_of_mines += 1
-                  if number_of_mines > 0:
-                    self.cells.append(NumberedCell(self.screen, i, j, number=number_of_mines))
-                  else: 
-                    self.cells.append(Cell(self.screen, i, j))
+                  self.cells.append(Cell(self.screen, i, j , number=number_of_mines))
        
 
     def run(self) -> None:
