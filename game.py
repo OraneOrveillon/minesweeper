@@ -1,6 +1,6 @@
 import pygame
 import random
-from constants import NUMBER_OF_SIDE_CELLS, NUMBER_OF_MINES
+from constants import NUMBER_OF_SIDE_CELLS, NUMBER_OF_MINES, SCREEN_SIZE, CELL_SIZE
 from cell import Cell, MinedCell
 
 class Game:
@@ -32,7 +32,16 @@ class Game:
                     if self.mines_coords.__contains__(cell_coord):
                       number_of_mines += 1
                   self.cells.append(Cell(self.screen, i, j , number=number_of_mines))
+
+    def draw_grid(self):
+        for x in range(NUMBER_OF_SIDE_CELLS):
+            for y in range(NUMBER_OF_SIDE_CELLS):
+                rect = pygame.Rect(x * CELL_SIZE + x, y * CELL_SIZE + y, CELL_SIZE + 2, CELL_SIZE + 2)
+                pygame.draw.rect(self.screen, 'grey', rect, 1)
        
 
     def run(self) -> None:
+        for cell in self.cells:
+            cell.check_click()
         pygame.sprite.Group(self.cells).draw(self.screen)
+        self.draw_grid()

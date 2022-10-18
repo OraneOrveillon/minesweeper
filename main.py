@@ -20,7 +20,6 @@ if __name__ == '__main__':
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-        screen.fill((30, 30, 30))
         game.run()
 
         pygame.display.flip()
