@@ -48,16 +48,17 @@ class Game:
     def check_click(self):
         if pygame.mouse.get_pressed()[0] or pygame.mouse.get_pressed()[2]:
             mouse_pos = pygame.mouse.get_pos()
-            # TODO Refactoring
             for cell in self.cells:
                 cell_rect = (cell.rect.x, cell.rect.y)
-                if (mouse_pos[0] >= cell_rect[0] and mouse_pos[0] <= cell_rect[0] + CELL_SIZE) and (mouse_pos[1] >= cell_rect[1] and mouse_pos[1] <= cell_rect[1] + CELL_SIZE):
+                # If the click is in the current cell
+                if (mouse_pos[0] - cell_rect[0] <= CELL_SIZE) and (mouse_pos[1] - cell_rect[1] <= CELL_SIZE):
                     if pygame.mouse.get_pressed()[0]:
                         cell.face_up(self.pressed)
                         self.pressed = False
                     elif pygame.mouse.get_pressed()[2]:
                         cell.set_flag(self.pressed)
                         self.pressed = False
+        # If the click is released
         else:
             self.pressed = True
 
