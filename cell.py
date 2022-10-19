@@ -7,8 +7,9 @@ class Cell(pygame.sprite.Sprite):
     def __init__(self, screen, x, y, number=0):
         super().__init__()
         self.screen = screen
+        self.number = 0
         self.image = pygame.image.load('assets/hidden.png')
-        self.face_up_image = pygame.image.load(f'assets/{str(number)}.png')
+        self.face_up_image = pygame.image.load(f'assets/{str(self.number)}.png')
         self.rect = self.image.get_rect(topleft=(x * (CELL_SIZE + GRID_WIDTH) + GRID_WIDTH, y * (CELL_SIZE + GRID_WIDTH) + GRID_WIDTH))
         self.flag = False
 
