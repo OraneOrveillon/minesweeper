@@ -39,8 +39,8 @@ class Game:
     def draw_grid(self):
         for x in range(NUMBER_OF_SIDE_CELLS):
             for y in range(NUMBER_OF_SIDE_CELLS):
-                rect = pygame.Rect(x * CELL_SIZE + x * GRID_WIDTH, y *
-                                   CELL_SIZE + y * GRID_WIDTH, CELL_SIZE + 2 * GRID_WIDTH, CELL_SIZE + 2 * GRID_WIDTH)
+                rect = pygame.Rect(x * (CELL_SIZE + GRID_WIDTH), y *
+                                   (CELL_SIZE + GRID_WIDTH), CELL_SIZE + 2 * GRID_WIDTH, CELL_SIZE + 2 * GRID_WIDTH)
                 pygame.draw.rect(self.screen, GRID_COLOR, rect, GRID_WIDTH)
 
     def check_click(self):

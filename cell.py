@@ -9,7 +9,7 @@ class Cell(pygame.sprite.Sprite):
         self.screen = screen
         self.image = pygame.image.load('assets/hidden.png')
         self.face_up_image = pygame.image.load(f'assets/{str(number)}.png')
-        self.rect = self.image.get_rect(topleft=(x * CELL_SIZE + x * GRID_WIDTH + GRID_WIDTH, y * CELL_SIZE + y * GRID_WIDTH + GRID_WIDTH))
+        self.rect = self.image.get_rect(topleft=(x * (CELL_SIZE + GRID_WIDTH) + GRID_WIDTH, y * (CELL_SIZE + GRID_WIDTH) + GRID_WIDTH))
         self.flag = False
 
     def face_up(self, pressed):
