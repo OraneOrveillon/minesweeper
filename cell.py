@@ -1,37 +1,32 @@
 import pygame
 
-from constants import CELL_SIZE
+from constants import CELL_SIZE, GRID_WIDTH
 
 
 class Cell(pygame.sprite.Sprite):
     def __init__(self, screen, x, y, number=0):
         super().__init__()
         self.screen = screen
-        self.number = number
-        # TODO : refactoriser les chemin + monter le projet d'un niveau de répertoire
-        self.image = pygame.image.load('minesweeper/assets/hidden.png')
-        self.rect = self.image.get_rect(topleft=(x * CELL_SIZE + x + 1, y * CELL_SIZE + y + 1))
+        self.image = pygame.image.load('assets/hidden.png')
+        self.face_up_image = pygame.image.load(f'assets/{str(number)}.png')
+        self.rect = self.image.get_rect(topleft=(x * CELL_SIZE + x * GRID_WIDTH + GRID_WIDTH, y * CELL_SIZE + y * GRID_WIDTH + GRID_WIDTH))
         self.flag = False
 
     def face_up(self, pressed):
         if pressed:
             self.returned = True
-            self.image = pygame.image.load('minesweeper/assets/'+str(self.number)+'.png')
+            self.image = self.face_up_image
 
     def set_flag(self, pressed):
         if pressed:
             self.flag = not self.flag
             if self.flag: 
-                self.image = pygame.image.load('minesweeper/assets/flag.png')
+                self.image = pygame.image.load('assets/flag.png')
             else: 
-                self.image = pygame.image.load('minesweeper/assets/hidden.png')
+                self.image = pygame.image.load('assets/hidden.png')
 
 
 class MinedCell(Cell):
     def __init__(self, screen, x, y):
         super().__init__(screen, x, y)
-    # TODO : Refactoring
-    def face_up(self, pressed):
-        if pressed:
-            self.returned = True
-            self.image = pygame.image.load('minesweeper/assets/mine.png')
+        self.face_up_image = pygame.image.load('assets/mine.png')

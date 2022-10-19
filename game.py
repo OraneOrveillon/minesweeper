@@ -1,8 +1,6 @@
-from tkinter.tix import CELL
 import pygame
 import random
-import math
-from constants import NUMBER_OF_SIDE_CELLS, NUMBER_OF_MINES, CELL_SIZE, GRID_COLOR
+from constants import NUMBER_OF_SIDE_CELLS, NUMBER_OF_MINES, CELL_SIZE, GRID_COLOR, GRID_WIDTH
 from cell import Cell, MinedCell
 
 
@@ -41,9 +39,9 @@ class Game:
     def draw_grid(self):
         for x in range(NUMBER_OF_SIDE_CELLS):
             for y in range(NUMBER_OF_SIDE_CELLS):
-                rect = pygame.Rect(x * CELL_SIZE + x, y *
-                                   CELL_SIZE + y, CELL_SIZE + 2, CELL_SIZE + 2)
-                pygame.draw.rect(self.screen, GRID_COLOR, rect, 1)
+                rect = pygame.Rect(x * CELL_SIZE + x * GRID_WIDTH, y *
+                                   CELL_SIZE + y * GRID_WIDTH, CELL_SIZE + 2 * GRID_WIDTH, CELL_SIZE + 2 * GRID_WIDTH)
+                pygame.draw.rect(self.screen, GRID_COLOR, rect, GRID_WIDTH)
 
     def check_click(self):
         if pygame.mouse.get_pressed()[0] or pygame.mouse.get_pressed()[2]:
