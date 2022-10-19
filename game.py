@@ -2,7 +2,7 @@ from tkinter.tix import CELL
 import pygame
 import random
 import math
-from constants import NUMBER_OF_SIDE_CELLS, NUMBER_OF_MINES, SCREEN_SIZE, CELL_SIZE
+from constants import NUMBER_OF_SIDE_CELLS, NUMBER_OF_MINES, CELL_SIZE, GRID_COLOR
 from cell import Cell, MinedCell
 
 
@@ -43,24 +43,23 @@ class Game:
             for y in range(NUMBER_OF_SIDE_CELLS):
                 rect = pygame.Rect(x * CELL_SIZE + x, y *
                                    CELL_SIZE + y, CELL_SIZE + 2, CELL_SIZE + 2)
-                # TODO : stocker la couleur dans les constantes
-                pygame.draw.rect(self.screen, 'grey', rect, 1)
+                pygame.draw.rect(self.screen, GRID_COLOR, rect, 1)
 
     def check_click(self):
-                if pygame.mouse.get_pressed()[0] or pygame.mouse.get_pressed()[2]:
-                    mouse_pos = pygame.mouse.get_pos()
-                    # TODO Refactoring
-                    for cell in self.cells:
-                        cell_rect = (cell.rect.x, cell.rect.y)
-                        if (mouse_pos[0] >= cell_rect[0] and mouse_pos[0] <= cell_rect[0] + CELL_SIZE) and (mouse_pos[1] >= cell_rect[1] and mouse_pos[1] <= cell_rect[1] + CELL_SIZE):
-                            if pygame.mouse.get_pressed()[0]:
-                                cell.face_up(self.pressed)
-                                self.pressed = False
-                            elif pygame.mouse.get_pressed()[2]:
-                                cell.set_flag(self.pressed)
-                                self.pressed = False
-                else:
-                    self.pressed = True
+        if pygame.mouse.get_pressed()[0] or pygame.mouse.get_pressed()[2]:
+            mouse_pos = pygame.mouse.get_pos()
+            # TODO Refactoring
+            for cell in self.cells:
+                cell_rect = (cell.rect.x, cell.rect.y)
+                if (mouse_pos[0] >= cell_rect[0] and mouse_pos[0] <= cell_rect[0] + CELL_SIZE) and (mouse_pos[1] >= cell_rect[1] and mouse_pos[1] <= cell_rect[1] + CELL_SIZE):
+                    if pygame.mouse.get_pressed()[0]:
+                        cell.face_up(self.pressed)
+                        self.pressed = False
+                    elif pygame.mouse.get_pressed()[2]:
+                        cell.set_flag(self.pressed)
+                        self.pressed = False
+        else:
+            self.pressed = True
 
     def run(self) -> None:
         pygame.sprite.Group(self.cells).draw(self.screen)
