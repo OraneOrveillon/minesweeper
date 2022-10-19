@@ -13,22 +13,25 @@ class Cell(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=(x * CELL_SIZE + x + 1, y * CELL_SIZE + y + 1))
         self.flag = False
 
-    def face_up(self):
-        self.returned = True
-        self.image = pygame.image.load('minesweeper/assets/'+str(self.number)+'.png')
+    def face_up(self, pressed):
+        if pressed:
+            self.returned = True
+            self.image = pygame.image.load('minesweeper/assets/'+str(self.number)+'.png')
 
-    def set_flag(self):
-        self.flag = not self.flag
-        if self.flag: 
-            self.image = pygame.image.load('minesweeper/assets/flag.png')
-        else: 
-            self.image = pygame.image.load('minesweeper/assets/hidden.png')
+    def set_flag(self, pressed):
+        if pressed:
+            self.flag = not self.flag
+            if self.flag: 
+                self.image = pygame.image.load('minesweeper/assets/flag.png')
+            else: 
+                self.image = pygame.image.load('minesweeper/assets/hidden.png')
 
 
 class MinedCell(Cell):
     def __init__(self, screen, x, y):
         super().__init__(screen, x, y)
-
-    def face_up(self):
-        self.returned = True
-        self.image = pygame.image.load('minesweeper/assets/mine.png')
+    # TODO : Refactoring
+    def face_up(self, pressed):
+        if pressed:
+            self.returned = True
+            self.image = pygame.image.load('minesweeper/assets/mine.png')
