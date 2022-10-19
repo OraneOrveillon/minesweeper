@@ -1,7 +1,10 @@
+from tkinter.tix import CELL
 import pygame
 import random
+import math
 from constants import NUMBER_OF_SIDE_CELLS, NUMBER_OF_MINES, SCREEN_SIZE, CELL_SIZE
 from cell import Cell, MinedCell
+
 
 class Game:
     def __init__(self, screen):
@@ -23,25 +26,38 @@ class Game:
                 if self.mines_coords.__contains__((i, j)):
                     self.cells.append(MinedCell(self.screen, i, j))
                 else:
-                  # Add numbered cells
-                  number_of_mines = 0
-                  # Cells around the actual cell
-                  range_cells = [(i - 1, j), (i, j - 1), (i - 1, j-1),
-                                (i + 1, j), (i, j + 1), (i + 1, j + 1), (i - 1, j + 1), (i + 1, j - 1)]
-                  for cell_coord in range_cells:
-                    if self.mines_coords.__contains__(cell_coord):
-                      number_of_mines += 1
-                  self.cells.append(Cell(self.screen, i, j , number=number_of_mines))
+                    # Add numbered cells
+                    number_of_mines = 0
+                    # Cells around the actual cell
+                    range_cells = [(i - 1, j), (i, j - 1), (i - 1, j-1),
+                                   (i + 1, j), (i, j + 1), (i + 1, j + 1), (i - 1, j + 1), (i + 1, j - 1)]
+                    for cell_coord in range_cells:
+                        if self.mines_coords.__contains__(cell_coord):
+                            number_of_mines += 1
+                    self.cells.append(
+                        Cell(self.screen, i, j, number=number_of_mines))
 
     def draw_grid(self):
         for x in range(NUMBER_OF_SIDE_CELLS):
             for y in range(NUMBER_OF_SIDE_CELLS):
-                rect = pygame.Rect(x * CELL_SIZE + x, y * CELL_SIZE + y, CELL_SIZE + 2, CELL_SIZE + 2)
+                rect = pygame.Rect(x * CELL_SIZE + x, y *
+                                   CELL_SIZE + y, CELL_SIZE + 2, CELL_SIZE + 2)
+                # TODO : stocker la couleur dans les constantes
                 pygame.draw.rect(self.screen, 'grey', rect, 1)
-       
+
+    def check_click(self):
+        if pygame.mouse.get_pressed()[0] or pygame.mouse.get_pressed()[2]:
+            mouse_pos = pygame.mouse.get_pos()
+            # TODO Refactoring
+            for cell in self.cells:
+                cell_rect = (cell.rect.x, cell.rect.y)
+                if (mouse_pos[0] >= cell_rect[0] and mouse_pos[0] <= cell_rect[0] + CELL_SIZE) and (mouse_pos[1] >= cell_rect[1] and mouse_pos[1] <= cell_rect[1] + CELL_SIZE):
+                    if pygame.mouse.get_pressed()[0]:
+                        cell.face_up()
+                    elif pygame.mouse.get_pressed()[2]:
+                        cell.set_flag()
 
     def run(self) -> None:
-        for cell in self.cells:
-            cell.check_click()
         pygame.sprite.Group(self.cells).draw(self.screen)
         self.draw_grid()
+        self.check_click()
