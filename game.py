@@ -1,11 +1,24 @@
 import pygame
 import random
-from constants import NUMBER_OF_SIDE_CELLS, NUMBER_OF_MINES, CELL_SIZE, GRID_COLOR, GRID_WIDTH
+from constants import NUMBER_OF_SIDE_CELLS, NUMBER_OF_MINES
+from constants import CELL_SIZE, GRID_WIDTH
+from constants import GRID_COLOR
 from cell import Cell, MinedCell
 
 
 class Game:
+    """
+    The top level of the application, represents the game interface.
+    """
     def __init__(self, screen):
+        """
+        - Defines random mines coordinates.
+        - For each part of the grid, adds a MinedCell if (i, j) in in mines_coords.
+        - If not, draws a normal Cell with a number corresponding to the number of mines around it.
+
+        Args:
+            screen (Surface): Top level window.
+        """
         self.screen = screen
         self.cells = []
         self.mines_coords = []
@@ -28,7 +41,7 @@ class Game:
                     # Add numbered cells
                     number_of_mines = 0
                     # Cells around the actual cell
-                    range_cells = [(i - 1, j), (i, j - 1), (i - 1, j-1),
+                    range_cells = [(i - 1, j), (i, j - 1), (i - 1, j - 1),
                                    (i + 1, j), (i, j + 1), (i + 1, j + 1), (i - 1, j + 1), (i + 1, j - 1)]
                     for cell_coord in range_cells:
                         if self.mines_coords.__contains__(cell_coord):
@@ -37,6 +50,9 @@ class Game:
                         Cell(self.screen, i, j, number=number_of_mines))
 
     def draw_grid(self):
+        """
+        Draws the grid between cells with given grid width dynamically.
+        """
         for x in range(NUMBER_OF_SIDE_CELLS):
             for y in range(NUMBER_OF_SIDE_CELLS):
                 rect = pygame.Rect(x * (CELL_SIZE + GRID_WIDTH), y *
@@ -44,6 +60,13 @@ class Game:
                 pygame.draw.rect(self.screen, GRID_COLOR, rect, GRID_WIDTH)
 
     def check_click(self):
+        """
+        - Checks of clicks by the user.
+        - Checks the cell clicked on.
+        - Left click : returns the cell.
+        - Right click : puts / removes the flag. 
+        - Sets pressed to False after methods calls to trigger them only once and sets it to True when the click is released.
+        """
         if pygame.mouse.get_pressed()[0] or pygame.mouse.get_pressed()[2]:
             mouse_pos = pygame.mouse.get_pos()
             for cell in self.cells:
@@ -61,6 +84,9 @@ class Game:
             self.pressed = True
 
     def run(self) -> None:
+        """
+        Draws the cells, the grid and checks of the clicks.
+        """
         pygame.sprite.Group(self.cells).draw(self.screen)
         self.draw_grid()
         self.check_click()
