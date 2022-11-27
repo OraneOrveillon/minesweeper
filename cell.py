@@ -7,7 +7,7 @@ class Cell(pygame.sprite.Sprite):
     """
     One item of the game grid.
     """
-    def __init__(self, screen, x, y, number=0):
+    def __init__(self, screen, i, j, number=0):
         """
         Initializes a sprite cell that is hidden at the start of the game.
 
@@ -19,11 +19,13 @@ class Cell(pygame.sprite.Sprite):
         """
         super().__init__()
         self.screen = screen
+        self.i = i
+        self.j = j
         self.number = number
         self.returned = False
         self.image = pygame.image.load('assets/hidden.png')
         self.face_up_image = pygame.image.load(f'assets/{str(self.number)}.png')
-        self.rect = self.image.get_rect(topleft=(x * (CELL_SIZE + GRID_WIDTH) + GRID_WIDTH, y * (CELL_SIZE + GRID_WIDTH) + GRID_WIDTH))
+        self.rect = self.image.get_rect(topleft=(i * (CELL_SIZE + GRID_WIDTH) + GRID_WIDTH, j * (CELL_SIZE + GRID_WIDTH) + GRID_WIDTH))
         self.flag = False
 
     def face_up(self, pressed):

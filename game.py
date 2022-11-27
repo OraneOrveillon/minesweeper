@@ -10,6 +10,7 @@ class Game:
     """
     The top level of the application, represents the game interface.
     """
+
     def __init__(self, screen):
         """
         - Defines random mines coordinates.
@@ -19,12 +20,15 @@ class Game:
         Args:
             screen (Surface): Top level window.
         """
+        # TODO test (enlever après)
+        self.iterations = 1000
+        self.actual_iteration = 0
         self.screen = screen
         self.cells = []
         self.mines_coords = []
         self.pressed = True
         for i in range(NUMBER_OF_MINES):
-            # Same as `do (new mine coords) while `
+            # Same as `do (new mine coords) while`
             while True:
                 mine_coords = (random.randint(0, NUMBER_OF_SIDE_CELLS - 1),
                                random.randint(0, NUMBER_OF_SIDE_CELLS - 1))
@@ -41,9 +45,9 @@ class Game:
                     # Add numbered cells
                     number_of_mines = 0
                     # Cells around the actual cell
-                    range_cells = [(i - 1, j), (i, j - 1), (i - 1, j - 1),
-                                   (i + 1, j), (i, j + 1), (i + 1, j + 1), (i - 1, j + 1), (i + 1, j - 1)]
-                    for cell_coord in range_cells:
+                    cells_around = [(i - 1, j), (i, j - 1), (i - 1, j - 1),
+                                    (i + 1, j), (i, j + 1), (i + 1, j + 1), (i - 1, j + 1), (i + 1, j - 1)]
+                    for cell_coord in cells_around:
                         if self.mines_coords.__contains__(cell_coord):
                             number_of_mines += 1
                     self.cells.append(
@@ -74,6 +78,11 @@ class Game:
                 # If the click is in the current cell
                 if (mouse_pos[0] - cell_rect[0] <= CELL_SIZE) and (mouse_pos[1] - cell_rect[1] <= CELL_SIZE):
                     if pygame.mouse.get_pressed()[0]:
+                        if type(cell) == MinedCell:
+                            pass
+                            # TODO Game over
+                        elif cell.number == 0:
+                            self.face_up_cells_around(cell.i, cell.j)
                         cell.face_up(self.pressed)
                         self.pressed = False
                     elif pygame.mouse.get_pressed()[2]:
@@ -82,6 +91,23 @@ class Game:
         # If the click is released
         else:
             self.pressed = True
+
+    def face_up_cells_around(self, i, j):
+        # TODO docstring
+        # FIXME
+        print(str(i)+', '+str(j))
+        cells_around = [(i - 1, j), (i, j - 1), (i + 1, j), (i, j + 1)]
+        for cell_around in cells_around:
+            for cell in self.cells:
+                if (cell.i, cell.j) == cell_around:
+                    if cell.number == 0 and cell.returned == False:
+                        cell.face_up(self.pressed)
+
+                        # TODO enlever les 2 lignes d'en-dessous après
+                        self.actual_iteration += 1
+                        if self.actual_iteration <= self.iterations:
+                            self.face_up_cells_around(cell.i, cell.j)
+                    break
 
     def run(self) -> None:
         """

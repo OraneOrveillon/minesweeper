@@ -19,14 +19,20 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
 
     game = Game(screen)
+    # TODO Enlever après
+    # sys.setrecursionlimit(1000)
+    # print(sys.getrecursionlimit())
 
     while True:
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     sys.exit()
-                    
+
         game.run()
 
         pygame.display.flip()
