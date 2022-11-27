@@ -20,9 +20,6 @@ class Game:
         Args:
             screen (Surface): Top level window.
         """
-        # TODO test (enlever après)
-        self.iterations = 1000
-        self.actual_iteration = 0
         self.screen = screen
         self.cells = []
         self.mines_coords = []
@@ -95,19 +92,15 @@ class Game:
     def face_up_cells_around(self, i, j):
         # TODO docstring
         # FIXME
-        print(str(i)+', '+str(j))
         cells_around = [(i - 1, j), (i, j - 1), (i + 1, j), (i, j + 1)]
         for cell_around in cells_around:
             for cell in self.cells:
                 if (cell.i, cell.j) == cell_around:
-                    if cell.number == 0 and cell.returned == False:
+                    if cell.returned == False:
                         cell.face_up(self.pressed)
-
-                        # TODO enlever les 2 lignes d'en-dessous après
-                        self.actual_iteration += 1
-                        if self.actual_iteration <= self.iterations:
-                            self.face_up_cells_around(cell.i, cell.j)
-                    break
+                        if cell.number == 0:
+                                self.face_up_cells_around(cell.i, cell.j)
+                        else: break
 
     def run(self) -> None:
         """

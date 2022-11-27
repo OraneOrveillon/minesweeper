@@ -19,9 +19,6 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
 
     game = Game(screen)
-    # TODO Enlever après
-    # sys.setrecursionlimit(1000)
-    # print(sys.getrecursionlimit())
 
     while True:
         for event in pygame.event.get():
