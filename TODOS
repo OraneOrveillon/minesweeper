@@ -1,4 +1,3 @@
-TODO : Configurer prettier et launch.json
+TODO : Adapter les sprites dynamiquement à la taille des cellules
 
-TODO : Return all empty cells around in " + " form when we click on an empty cell
 TODO : Score storage in a JSON file

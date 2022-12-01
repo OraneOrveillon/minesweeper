@@ -7,6 +7,7 @@ class Cell(pygame.sprite.Sprite):
     """
     One item of the game grid.
     """
+
     def __init__(self, screen, i, j, number=0):
         """
         Initializes a sprite cell that is hidden at the start of the game.
@@ -23,9 +24,14 @@ class Cell(pygame.sprite.Sprite):
         self.j = j
         self.number = number
         self.returned = False
-        self.image = pygame.image.load('assets/hidden.png')
-        self.face_up_image = pygame.image.load(f'assets/{str(self.number)}.png')
-        self.rect = self.image.get_rect(topleft=(i * (CELL_SIZE + GRID_WIDTH) + GRID_WIDTH, j * (CELL_SIZE + GRID_WIDTH) + GRID_WIDTH))
+        self.image = pygame.image.load("assets/hidden.png")
+        self.face_up_image = pygame.image.load(f"assets/{str(self.number)}.png")
+        self.rect = self.image.get_rect(
+            topleft=(
+                i * (CELL_SIZE + GRID_WIDTH) + GRID_WIDTH,
+                j * (CELL_SIZE + GRID_WIDTH) + GRID_WIDTH,
+            )
+        )
         self.flag = False
 
     def face_up(self, pressed):
@@ -48,10 +54,10 @@ class Cell(pygame.sprite.Sprite):
         """
         if pressed and not self.returned:
             self.flag = not self.flag
-            if self.flag: 
-                self.image = pygame.image.load('assets/flag.png')
-            else: 
-                self.image = pygame.image.load('assets/hidden.png')
+            if self.flag:
+                self.image = pygame.image.load("assets/flag.png")
+            else:
+                self.image = pygame.image.load("assets/hidden.png")
 
 
 class MinedCell(Cell):
@@ -66,4 +72,4 @@ class MinedCell(Cell):
             See Cell class.
         """
         super().__init__(screen, x, y)
-        self.face_up_image = pygame.image.load('assets/mine.png')
+        self.face_up_image = pygame.image.load("assets/mine.png")
