@@ -24,8 +24,12 @@ class Cell(pygame.sprite.Sprite):
         self.j = j
         self.number = number
         self.returned = False
-        self.image = pygame.image.load("assets/hidden.png")
-        self.face_up_image = pygame.image.load(f"assets/{str(self.number)}.png")
+        self.hidden_image = pygame.transform.scale(pygame.image.load("assets/hidden.png"), (CELL_SIZE, CELL_SIZE))
+        self.face_up_image = pygame.transform.scale(
+            pygame.image.load(f"assets/{str(self.number)}.png"), (CELL_SIZE, CELL_SIZE)
+        )
+        self.flag_image = pygame.transform.scale(pygame.image.load("assets/flag.png"), (CELL_SIZE, CELL_SIZE))
+        self.image = self.hidden_image
         self.rect = self.image.get_rect(
             topleft=(
                 i * (CELL_SIZE + GRID_WIDTH) + GRID_WIDTH,
@@ -55,9 +59,9 @@ class Cell(pygame.sprite.Sprite):
         if pressed and not self.returned:
             self.flag = not self.flag
             if self.flag:
-                self.image = pygame.image.load("assets/flag.png")
+                self.image = self.flag_image
             else:
-                self.image = pygame.image.load("assets/hidden.png")
+                self.image = self.hidden_image
 
 
 class MinedCell(Cell):
